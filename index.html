@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <script src="aframe.min.js"></script>
+    <script src="aframe-ar.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+    <a-scene embedded arjs>
+                <a-marker type="pattern" url="marker-3.patt" emitevents="true" smooth="true"
+                smoothCount="10"
+                smoothTolerance="0.01"
+                smoothThreshold="5"  id="g3_marker">
+            <!-- Video element -->
+            <a-video id="video3" src="#v3" width="5" height="5" position="0 -2.5 -2.5" rotation="-90 0 0" scale="0.6 0.5 0.4"  class="clickable"
+                    gesture-handler visible="true"></a-video>
+             <audio id="audio1" src="audio1.mp3"></audio>
+        </a-marker>
+      <a-assets>
+    <video id="v3" autoplay loop crossorigin="anonymous"  muted playsinline>
+                <source src="g3.mp4" type="video/mp4">
+    <audio id="audio1" src="audio1.mp3"></audio>              
+          </a-assets>
+        <a-entity camera></a-entity>
+
+        <script>
+           var g3_marker = document.querySelector('#g3_marker');
+ 
+ g3_marker.addEventListener('markerFound', function () {
+                var video3 = document.querySelector('#video3');
+                 var audio1 = document.querySelector('#audio1'); 
+                video3.components.material.material.map.image.play();
+                audio1.play();
+            });
+
+            g3_marker.addEventListener('markerLost', function () {
+                var video3 = document.querySelector('#video3');
+                var audio1 = document.querySelector('#audio1'); 
+                video3.components.material.material.map.image.currentTime = 0;
+                audio1.pause();
+            });
+
+        </script>
+    </a-scene>
+</body>
+</html>
